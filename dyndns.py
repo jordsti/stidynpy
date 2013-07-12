@@ -37,18 +37,24 @@ class DynWatcher:
             return
 
         while True:
-            self.dyndoms = self.freedns.get_domains(self.config.key)
-            self.last_ip = getPublicIP()
+            gettedinfo = False
+            try:
+                self.dyndoms = self.freedns.get_domains(self.config.key)
+                self.last_ip = getPublicIP()
+                gettedinfo = True
+            except:
+                print "Problably disconnect from the internet"
+                
 
             print "Your ip is "+self.last_ip
-
-            for dyn in self.dyndoms:
-                if self.matchdomains(dyn):
-                    if dyn.current_ip != self.last_ip:
-                        print dyn.domain+" IP is "+dyn.current_ip+" need update !"
-                        dyn.update()
-                    else:
-                        print dyn.domain+" is up-to-date"
+            if gettedinfo:
+                for dyn in self.dyndoms:
+                    if self.matchdomains(dyn):
+                        if dyn.current_ip != self.last_ip:
+                            print dyn.domain+" IP is "+dyn.current_ip+" need update !"
+                            dyn.update()
+                        else:
+                            print dyn.domain+" is up-to-date"
 
             print "Sleeping..."
             time.sleep(self.interval)
