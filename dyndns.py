@@ -3,7 +3,7 @@ import hashlib
 import os
 import time
 
-ip_url = "http://stinetwork.info/ip.php"
+ip_url = "http://ci.sticode.org/ip.php"
 config_file = "config.dyn"
 
 class DynWatcher:
